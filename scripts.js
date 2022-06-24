@@ -12,6 +12,9 @@ window.addEventListener("load", function() {
     const goLeft = document.getElementById("left");
     const goRight = document.getElementById("right");
     let rocket = document.getElementById("rocket");
+    let backgroundHeight = sBackground.offsetHeight;
+    let backgroundWidth = sBackground.offsetWidth;
+
 
     takeOff.addEventListener("click", function() {
         let result = window.confirm("Confirm that the shuttle is ready for takeoff.");
@@ -36,12 +39,48 @@ window.addEventListener("load", function() {
             sBackground.style.backgroundColor = "green";
             sHeight.innerHTML = 0;
         }
+    });
+    
+    goDown.addEventListener("click", function() {
+        let mt = Number(rocket.style.marginTop.replaceAll("px", ""));
+        if (rocket.height + mt < backgroundHeight) {
+                mt += 10;
+                rocket.style.marginTop = `${mt}px`;
+            } else {
+                status.innerHTML = "Rocket hit bounds.";
+            }
+    });
+
+    goUp.addEventListener("click", function() {
+        let mt = Number(rocket.style.marginTop.replaceAll("px", ""));
+        if (mt > 0) {
+            mt -= 10;
+            rocket.style.marginTop = `${mt}px`;
+        } else {
+            status.innerHTML = "Rocket hit bounds.";
+        }
     })
 
-    goDown.addEventListener("click", function() {
-        let movement = parseInt(rocket.style.marginBottom) - 10 + "px";
-        rocket.style.marginBottom = movement;
-        sHeight.innerHTML = parseInt(sHeight) - 10000;
-    });
+    goLeft.addEventListener("click", function() {
+        let ls = Number(rocket.style.marginLeft.replaceAll("px", ""));
+
+        if (rocket.width + ls < backgroundWidth) {
+            ls -= 10;
+            rocket.style.marginLeft = `${ls}px`;
+        } else {
+            status.innerHTML = "Rocket hit bounds.";
+        }
+    })
+
+    goRight.addEventListener("click", function() {
+        let rs = Number(rocket.style.marginLeft.replaceAll("px", ""));
+
+        if (rocket.width + rs < backgroundWidth) {
+            rs += 10;
+            rocket.style.marginLeft = `${rs}px`;
+        } else {
+            status.innerHTML = "Rocket hit bounds.";
+        }
+    })
 
 });
